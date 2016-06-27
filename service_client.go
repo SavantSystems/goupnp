@@ -16,7 +16,7 @@ type ServiceClient struct {
 
 func NewServiceClients(searchTarget string) (clients []ServiceClient, errors []error, err error) {
 	var maybeRootDevices []MaybeRootDevice
-	if maybeRootDevices, err = DiscoverDevices(searchTarget); err != nil {
+	if maybeRootDevices, err = DiscoverDevices(searchTarget,false); err != nil {
 		return
 	}
 

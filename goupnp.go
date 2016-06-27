@@ -22,8 +22,7 @@ import (
 	"time"
 	"golang.org/x/net/html/charset"
 
-	"github.com/huin/goupnp/httpu"
-	//"github.com/huin/goupnp/ssdp"
+	"github.com/savantsystems/goupnp/httpu"
 	"github.com/savantsystems/goupnp/ssdp"
 )
 
@@ -49,13 +48,13 @@ type MaybeRootDevice struct {
 // "urn:schemas-upnp-org:service:...". A single error is returned for errors
 // while attempting to send the query. An error or RootDevice is returned for
 // each discovered RootDevice.
-func DiscoverDevices(searchTarget string) ([]MaybeRootDevice, error) {
+func DiscoverDevices(searchTarget string, broadcast bool) ([]MaybeRootDevice, error) {
 	httpu, err := httpu.NewHTTPUClient()
 	if err != nil {
 		return nil, err
 	}
 	defer httpu.Close()
-	responses, err := ssdp.SSDPRawSearch(httpu, string(searchTarget), 2, 3)
+	responses, err := ssdp.SSDPRawSearch(broadcast, httpu, string(searchTarget), 2, 3)
 	if err != nil {
 		return nil, err
 	}
